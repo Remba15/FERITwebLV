@@ -25,6 +25,16 @@ nav {
     position: relative;
 }
 
+#active::after{
+    content: '';
+    background: yellow;
+    width: 100%;
+    display: block;
+    margin: auto;
+    height: 2px;
+    
+}
+
 .nav_links ul li a {
     color: #f2f2f2;
     text-decoration: none;
@@ -50,12 +60,12 @@ button {
     text-align: center;
     padding: 10px 10px;
     text-decoration: none;
-    float: right;
+    float: center;
     margin-top: 5px;
     border-radius: 5px;
     margin-right: 5px;
     color: #f2f2f2;
-    font-size: 30px;
+    font-size: 22px;
 }
 
 h1 {
@@ -101,6 +111,20 @@ h1 {
     color: #f2f2f2;
     font-size: 20px;
 }
+.collumn_RM {
+    height: fit-content;
+    background-color: rgba(13, 23, 32, 255);
+    color: #f2f2f2;
+    font-size: 20px;
+}
+.collumn a::after {
+    content: '';
+    background: yellow;
+    width: 20%;
+    display: block;
+    margin: auto;
+    height: 2px;
+}
  .Read{
     background-color: #6b156d;
     text-align: center;
@@ -108,7 +132,7 @@ h1 {
     text-decoration: none;
     border-radius: 5px;
     color: #f2f2f2;
-    font-size: 30px;
+    font-size: 22px;
     margin: 0;
     align-self: center;
  }

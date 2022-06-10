@@ -1,1 +1,7 @@
 /*ovdje dodamo stvari bitne samo za tu stranicu*/
+.world_map{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 55%;
+}
