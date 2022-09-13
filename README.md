@@ -2,7 +2,7 @@
 
 Ime grupe: BHK
 Članovi grupe: Franka Bogdanović, Iva Horvat, Renato Kuna
-Korištene tehnologije: VS Code, HTML, CSS, JavaScript, Server (Azure)...
+Korištene tehnologije: VS Code, HTML, CSS, JavaScript, Server (Firebase)...
 Projekt: Web stranica za igru
 Namjenjena korisnicima: mlađim osobama koje su zainteresirane za igru
 Sadržaj: -user login/create
