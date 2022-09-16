@@ -5,13 +5,9 @@ Ime grupe: BHK
 Korištene tehnologije: VS Code, HTML, CSS, JavaScript, Server (Firebase)...
 Projekt: Web stranica za igru
 Namjenjena korisnicima: mlađim osobama koje su zainteresirane za igru
-Sadržaj: -user login/create
-         -mogućnost komentiranja sadržaja stranice/stranica
-         -dodavanje korisničkog sadržaja
-         -homepage s novostima
-         -Sadržaj stranica:
-                  ->Detaljne informacije o svijetu i likovima
-                  ->Upute o načinu igre
-                  ->Pregled video sadržaja koji korisnici mogu sami postaviti
-                  ->Tier lista
-                  
+Sadržaj stranica:
+         ->Home page: prvi kontakt korisnika sa stranicom - jednostavan i pregledan sadržaj prikazan kako bi privukao korisnika
+         ->Champions page: prikaz championa - naziv, slika i kratak lore
+         ->Items page: prikaz itema - klikom na details prikaz naziva, slike i statova
+                                    - klikom na item dodajemo ga u kalkulator golda
+         ->Tier lista - jednostavan prikaz tiera championa za svaki role za svaki patch
