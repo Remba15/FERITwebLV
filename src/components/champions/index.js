@@ -7,7 +7,7 @@ const Champions = () => {
 
   const fetchChampions = async () => {
     const response = await fetch(
-      "http://ddragon.leagueoflegends.com/cdn/12.17.1/data/en_US/champion.json",
+      "https://ddragon.leagueoflegends.com/cdn/12.17.1/data/en_US/champion.json",
       {
         method: "GET",
       }
@@ -59,7 +59,7 @@ const Champions = () => {
                   loading="lazy"
                   width={120}
                   height={120}
-                  src={`http://ddragon.leagueoflegends.com/cdn/12.17.1/img/champion/${value.image.full}`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/12.17.1/img/champion/${value.image.full}`}
                   alt={value.name}
                 />
               </div>
@@ -100,7 +100,7 @@ const Champions = () => {
                   loading="lazy"
                   width={120}
                   height={120}
-                  src={`http://ddragon.leagueoflegends.com/cdn/12.17.1/img/champion/${selectedChampion.image.full}`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/12.17.1/img/champion/${selectedChampion.image.full}`}
                   alt={selectedChampion.name}
                 />
               </div>
