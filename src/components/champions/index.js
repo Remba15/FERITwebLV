@@ -25,7 +25,7 @@ const Champions = () => {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
         textAlign: "center",
-        backgroundColor: "#010a13"
+        backgroundColor: "#010a13",
       }}
     >
       {champions &&
@@ -104,9 +104,24 @@ const Champions = () => {
                   alt={selectedChampion.name}
                 />
               </div>
-              <div>{selectedChampion.blurb}</div>
+              <div
+                style={{
+                  maxWidth: "31.5rem",
+                }}
+              >
+                {selectedChampion.blurb}
+              </div>
 
-              
+              {/* <div>
+                {Object.entries(selectedChampion.stats).map(([key, value]) => {
+                  return (
+                    <div>
+                      {key}: {value}
+                    </div>
+                  );
+                })}
+              </div> */}
+
             </div>
           )}
         </div>
