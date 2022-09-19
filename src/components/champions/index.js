@@ -122,9 +122,6 @@ const Champions = () => {
                   );
                 })}
               </div> */}
-              <Button>
-                Put on wishlist
-              </Button>
             </div>
           )}
         </div>
