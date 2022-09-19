@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
+import { GetCurrentFirebaseUser } from "../firebaseconfig";
 import Modal from "../Modal/Modal";
 
 const Items = () => {
   const [items, setItems] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedItems, setSelectedItems] = useState({});
+  const [selectedItemKey, setSelectedItemKey] = useState(null);
+  const [userWhistlist, setUserWhistlist] = useState(null);
+  const currentUser = GetCurrentFirebaseUser();
 
   const fetchItems = async () => {
     const response = await fetch(
@@ -16,9 +22,27 @@ const Items = () => {
     setItems(response.data);
   };
 
+  const fetchItemsForUser = async () => {
+    const db = getDatabase();
+    const userItemsRef = ref(db, `users/${currentUser.uid}/items`);
+    onValue(userItemsRef, (snapshot) => {
+      const data = snapshot.val();
+      setUserWhistlist(data);
+    });
+  };
+
   useEffect(() => {
     fetchItems();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchItemsForUser();
+    }
+    return () => {
+      setUserWhistlist(null);
+    };
+  }, [currentUser]);
 
   return (
     <div
@@ -27,7 +51,7 @@ const Items = () => {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
         textAlign: "center",
-        backgroundColor:"#010a13",
+        backgroundColor: "#010a13",
       }}
     >
       {items &&
@@ -64,7 +88,7 @@ const Items = () => {
                   fontWeight: "bold",
                   fontSize: "20px",
                   userSelect: "none",
-                  color: "#FFFFFF"
+                  color: "#FFFFFF",
                 }}
               >
                 {value.name}
@@ -79,13 +103,49 @@ const Items = () => {
                 />
               </div>
               <button
+                style={{
+                  backgroundColor: "#010a13",
+                  border: "1px solid #FFFFFF",
+                  color: "#FFFFFF",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginTop: "10px",
+                  cursor: "pointer",
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedItem(value);
+                  setSelectedItemKey(key);
                 }}
               >
                 Details
               </button>
+              {userWhistlist && userWhistlist[key] && (
+                <button
+                  style={{
+                    backgroundColor: "#e63333",
+                    border: "1px solid #FFFFFF",
+                    color: "#FFFFFF",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    marginTop: "10px",
+                    cursor: "pointer",
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const db = getDatabase();
+                    const userItemsRef = ref(
+                      db,
+                      `users/${currentUser.uid}/items`
+                    );
+                    update(userItemsRef, {
+                      [key]: null,
+                    });
+                  }}
+                >
+                  Remove from whislist
+                </button>
+              )}
             </div>
           );
         })}
@@ -140,7 +200,10 @@ const Items = () => {
       </div>
       <Modal
         show={!!selectedItem}
-        closeModal={() => setSelectedItem(null)}
+        closeModal={() => {
+          setSelectedItem(null);
+          setSelectedItemKey(null);
+        }}
         animation="fade"
       >
         <div
@@ -182,19 +245,53 @@ const Items = () => {
               <div>
                 {Object.entries(selectedItem.gold).map(([key, value]) => {
                   return (
-                    <div>
+                    <div key={key}>
                       {key}: {value}
                     </div>
                   );
                 })}
                 {Object.entries(selectedItem.stats).map(([key, value]) => {
                   return (
-                    <div>
+                    <div key={key}>
                       {key}: {value}
                     </div>
                   );
                 })}
               </div>
+              {currentUser ? (
+                <Button
+                  onClick={() => {
+                    const db = getDatabase();
+                    if (userWhistlist && userWhistlist[selectedItemKey]) {
+                      const updates = {};
+                      updates[
+                        `/users/${currentUser.uid}/items/${selectedItemKey}`
+                      ] = null;
+                      update(ref(db), updates);
+                    } else {
+                      set(ref(db, "users/" + currentUser.uid + "/items"), {
+                        ...userWhistlist,
+                        [selectedItemKey]: selectedItem,
+                      });
+                    }
+                  }}
+                >
+                  {userWhistlist && userWhistlist[selectedItemKey]
+                    ? "Remove item from whislist"
+                    : "Put on wishlist"}
+                </Button>
+              ) : (
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    border: "1px solid #1112",
+                    padding: "1rem",
+                  }}
+                >
+                  Please login to put this item on your wishlist
+                </div>
+              )}
             </div>
           )}
         </div>

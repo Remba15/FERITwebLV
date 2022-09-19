@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
+import { Button } from "react-bootstrap";
 
 const Champions = () => {
   const [champions, setChampions] = useState(null);
@@ -121,7 +122,9 @@ const Champions = () => {
                   );
                 })}
               </div> */}
-
+              <Button>
+                Put on wishlist
+              </Button>
             </div>
           )}
         </div>

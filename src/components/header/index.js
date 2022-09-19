@@ -1,7 +1,12 @@
-import { NavLink, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+import firebase from "firebase/compat/app";
+import { GetCurrentFirebaseUser } from "../firebaseconfig";
+import Login from "../login";
 
 const Header = (props) => {
+  const [showLogin, setShowLogin] = useState(false);
   useEffect(() => {
     let navbar = document.querySelector(".header .navbar");
     let menuBtn = document.querySelector("#menu-btn");
@@ -29,9 +34,29 @@ const Header = (props) => {
         <NavLink to="/champions">Champions</NavLink>
         <NavLink to="/items">Items</NavLink>
         <NavLink to="/tierlist">TierList</NavLink>
+        {GetCurrentFirebaseUser() ? (
+          <NavLink
+            onClick={async () => {
+              await signOut(getAuth(firebase.app()));
+              localStorage.removeItem("user");
+            }}
+          >
+            Logout
+          </NavLink>
+        ) : (
+          <NavLink
+            onClick={() => {
+              setShowLogin(true);
+            }}
+          >
+            Login
+          </NavLink>
+        )}
       </nav>
 
       <div id="menu-btn" className="fas fa-bars"></div>
+
+      <Login show={showLogin} closeModal={() => setShowLogin(false)} />
     </section>
   );
 };
